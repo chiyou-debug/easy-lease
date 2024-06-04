@@ -1,14 +1,17 @@
 package com.example.lease.web.admin.controller.lease;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.lease.common.result.Result;
 import com.example.lease.model.entity.LeaseAgreement;
 import com.example.lease.model.enums.LeaseStatus;
+import com.example.lease.web.admin.service.LeaseAgreementService;
 import com.example.lease.web.admin.vo.agreement.AgreementQueryVo;
 import com.example.lease.web.admin.vo.agreement.AgreementVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,16 +20,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/agreement")
 public class LeaseAgreementController {
 
+    @Autowired
+    private LeaseAgreementService service;
+
     @Operation(summary = "保存或修改租约信息")
     @PostMapping("saveOrUpdate")
     public Result saveOrUpdate(@RequestBody LeaseAgreement leaseAgreement) {
+        service.saveOrUpdate(leaseAgreement);
         return Result.ok();
     }
 
     @Operation(summary = "根据条件分页查询租约列表")
     @GetMapping("page")
     public Result<IPage<AgreementVo>> page(@RequestParam long current, @RequestParam long size, AgreementQueryVo queryVo) {
-        return Result.ok();
+        IPage<AgreementVo> page = new Page<>(current, size);
+        IPage<AgreementVo> list = service.pageAgreementByQuery(page, queryVo);
+        return Result.ok(list);
     }
 
     @Operation(summary = "根据id查询租约信息")

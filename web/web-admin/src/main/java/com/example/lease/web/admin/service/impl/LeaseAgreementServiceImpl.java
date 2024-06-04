@@ -1,9 +1,13 @@
 package com.example.lease.web.admin.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.lease.model.entity.LeaseAgreement;
 import com.example.lease.web.admin.mapper.LeaseAgreementMapper;
 import com.example.lease.web.admin.service.LeaseAgreementService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.lease.web.admin.vo.agreement.AgreementQueryVo;
+import com.example.lease.web.admin.vo.agreement.AgreementVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +19,13 @@ import org.springframework.stereotype.Service;
 public class LeaseAgreementServiceImpl extends ServiceImpl<LeaseAgreementMapper, LeaseAgreement>
         implements LeaseAgreementService {
 
+    @Autowired
+    private LeaseAgreementMapper leaseAgreementMapper;
+
+    @Override
+    public IPage<AgreementVo> pageAgreementByQuery(IPage<AgreementVo> page, AgreementQueryVo queryVo) {
+        return leaseAgreementMapper.pageAgreementByQuery(page, queryVo);
+    }
 }
 
 

@@ -1,5 +1,6 @@
 package com.example.lease.web.admin.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.lease.model.entity.ViewAppointment;
 import com.example.lease.web.admin.vo.appointment.AppointmentQueryVo;
 import com.example.lease.web.admin.vo.appointment.AppointmentVo;
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ViewAppointmentService extends IService<ViewAppointment> {
 
+    IPage<AppointmentVo> pageAppointment(Page<AppointmentVo> page, AppointmentQueryVo queryVo);
 }
